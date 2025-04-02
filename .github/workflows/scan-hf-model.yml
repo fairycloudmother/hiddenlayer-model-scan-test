@@ -17,6 +17,12 @@ jobs:
           model_path: google-bert/bert-base-uncased
           fail_on_detection: false
           community_scan: 'HUGGING_FACE'
+          sarif_file: output.sarif
         env:
           HL_CLIENT_ID: ${{ secrets.HL_CLIENT_ID }}
           HL_CLIENT_SECRET: ${{ secrets.HL_CLIENT_SECRET }}
+      - name: Upload SARIF file
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          # Path to SARIF file relative to the root of the repository
+            sarif_file: output.sarif
