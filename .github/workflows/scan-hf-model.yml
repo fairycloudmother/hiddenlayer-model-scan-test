@@ -3,6 +3,11 @@ name: Scan HuggingFace Model
 on:
   workflow_dispatch:
 
+permissions:
+  actions: read
+  contents: read
+  security-events: write
+
 jobs:
   scan_huggingface_model_community_scan:
     runs-on: ubuntu-latest
