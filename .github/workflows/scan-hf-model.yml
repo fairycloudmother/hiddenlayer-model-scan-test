@@ -1,4 +1,4 @@
-name: Scan HuggingFace Model (ScanMe/Models)
+name: Scan HuggingFace Model
 
 on:
   workflow_dispatch:
@@ -6,7 +6,7 @@ on:
 jobs:
   scan_huggingface_model_community_scan:
     runs-on: ubuntu-latest
-    name: Scan ScanMe/Models via Community Scan
+    name: Scan google-bert/bert-base-uncased via Community Scan
     steps:
       - uses: actions/checkout@v3
 
@@ -14,7 +14,7 @@ jobs:
         id: community_scan_huggingface
         uses: hiddenlayerai/hiddenlayer-model-scan-github-action@v1.0.5
         with:
-          model_path: https://huggingface.co/ScanMe/Models
+          model_path: google-bert/bert-base-uncased
           fail_on_detection: false
           community_scan: 'HUGGING_FACE'
         env:
