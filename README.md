@@ -44,7 +44,7 @@ jobs:
         env:
           HL_CLIENT_ID: ${{ secrets.HL_CLIENT_ID }}
           HL_CLIENT_SECRET: ${{ secrets.HL_CLIENT_SECRET }}
-
+```
 ---
 
 ## Prerequisites
