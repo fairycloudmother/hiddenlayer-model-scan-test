@@ -11,7 +11,7 @@ jobs:
       - uses: actions/checkout@v3
       - name: Scan model on HuggingFace
         id: scan_model_huggingface
-        uses: hiddenlayerai/hiddenlayer-model-scan-github-action@v1.0.2
+        uses: hiddenlayerai/hiddenlayer-model-scan-github-action@v1.0.5
         with:
           model_path: ScanMe/Models
           model_version: main
