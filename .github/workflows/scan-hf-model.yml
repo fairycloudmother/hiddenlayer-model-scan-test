@@ -11,7 +11,7 @@ permissions:
 jobs:
   scan_huggingface_model_community_scan:
     runs-on: ubuntu-latest
-    name: Scan google-bert/bert-base-uncased via Community Scan
+    name: Scan deepseek-ai/DeepSeek-R1 via Community Scan
     steps:
       - uses: actions/checkout@v3
 
@@ -19,7 +19,7 @@ jobs:
         id: community_scan_huggingface
         uses: hiddenlayerai/hiddenlayer-model-scan-github-action@v1.0.5
         with:
-          model_path: google-bert/bert-base-uncased
+          model_path: deepseek-ai/DeepSeek-R1
           fail_on_detection: false
           community_scan: 'HUGGING_FACE'
           sarif_file: output.sarif
