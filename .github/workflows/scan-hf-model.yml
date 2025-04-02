@@ -1,0 +1,21 @@
+name: Scan HuggingFace Model (ScanMe/Models)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  scan_huggingface_model_community_scan:
+    runs-on: ubuntu-latest
+    name: Scan ScanMe/Models via Community Scan
+    steps:
+      - uses: actions/checkout@v3
+      - name: Scan model on HuggingFace
+        id: scan_model_huggingface
+        uses: hiddenlayerai/hiddenlayer-model-scan-github-action@v1.0.2
+        with:
+          model_path: ScanMe/Models
+          model_version: main
+          community_scan: HUGGING_FACE
+        env:
+          HL_CLIENT_ID: ${{ secrets.HL_CLIENT_ID }}
+          HL_CLIENT_SECRET: ${{ secrets.HL_CLIENT_SECRET }}
