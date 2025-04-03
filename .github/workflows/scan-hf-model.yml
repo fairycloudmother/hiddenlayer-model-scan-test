@@ -11,7 +11,7 @@ permissions:
 jobs:
   scan_huggingface_model_community_scan:
     runs-on: ubuntu-latest
-    name: Scan deepseek-ai/DeepSeek-R1 via Community Scan
+    name: Scan ScanMe/Models via Community Scan
     steps:
       - uses: actions/checkout@v3
 
@@ -19,7 +19,7 @@ jobs:
         id: community_scan_huggingface
         uses: hiddenlayerai/hiddenlayer-model-scan-github-action@v1.0.5
         with:
-          model_path: deepseek-ai/DeepSeek-R1
+          model_path: ScanMe/Models
           fail_on_detection: false
           community_scan: 'HUGGING_FACE'
           sarif_file: output.sarif
