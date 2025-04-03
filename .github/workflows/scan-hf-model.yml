@@ -27,6 +27,12 @@ jobs:
         env:
           HL_CLIENT_ID: ${{ secrets.HL_CLIENT_ID }}
           HL_CLIENT_SECRET: ${{ secrets.HL_CLIENT_SECRET }}
+
+      - name: Check for SARIF output
+        run: |
+          echo "Current directory: $(pwd)"
+          ls -al
+
       - name: Upload SARIF file
         uses: github/codeql-action/upload-sarif@v3
         with:
