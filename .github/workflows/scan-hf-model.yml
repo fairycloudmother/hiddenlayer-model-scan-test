@@ -21,8 +21,8 @@ jobs:
         with:
           model_path: https://huggingface.co/ScanMe/Models/tree/main
           model_version: main
-          fail_on_detection: false
           community_scan: 'HUGGING_FACE'
+          fail_on_detection: false
           sarif_file: output.sarif
         env:
           HL_CLIENT_ID: ${{ secrets.HL_CLIENT_ID }}
