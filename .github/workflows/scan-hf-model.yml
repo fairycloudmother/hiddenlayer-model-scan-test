@@ -19,7 +19,7 @@ jobs:
         id: community_scan_huggingface
         uses: hiddenlayerai/hiddenlayer-model-scan-github-action@v1.0.5
         with:
-          model_path: https://huggingface.co/ScanMe/Models
+          model_path: https://huggingface.co/ScanMe/Models/tree/main
           model_version: main
           community_scan: 'HUGGING_FACE'
           fail_on_detection: false
