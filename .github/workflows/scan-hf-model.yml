@@ -19,7 +19,7 @@ jobs:
         id: community_scan_huggingface
         uses: hiddenlayerai/hiddenlayer-model-scan-github-action@v1.0.5
         with:
-          model_path: openai/gpt-oss-120b
+          model_path: hidden-emma/zerobyte
           model_version: main
           community_scan: 'HUGGING_FACE'
           fail_on_detection: false
