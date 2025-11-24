@@ -13,17 +13,19 @@ jobs:
     runs-on: ubuntu-latest
     name: Scan ScanMe/Models via Community Scan
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Community Scan HuggingFace
         id: community_scan_huggingface
         uses: hiddenlayerai/hiddenlayer-model-scan-github-action@v1.0.5
         with:
+          model_name: zerobyte
           model_path: hidden-emma/zerobyte
           model_version: main
-          community_scan: 'HUGGING_FACE'
+          community_scan: HUGGING_FACE
           fail_on_detection: false
           sarif_file: output.sarif
+          api_url: https://api.us.hiddenlayer.ai
         env:
           HL_CLIENT_ID: ${{ secrets.HL_CLIENT_ID }}
           HL_CLIENT_SECRET: ${{ secrets.HL_CLIENT_SECRET }}
@@ -34,7 +36,8 @@ jobs:
           ls -al
 
       - name: Upload SARIF file
+        if: always()
         uses: github/codeql-action/upload-sarif@v3
         with:
           # Path to SARIF file relative to the root of the repository
-            sarif_file: output.sarif
+          sarif_file: output.sarif
