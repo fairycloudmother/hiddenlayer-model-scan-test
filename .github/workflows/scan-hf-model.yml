@@ -18,7 +18,7 @@ jobs:
         id: scan_model_huggingface
         uses: hiddenlayerai/hiddenlayer-model-scan-github-action@v1.0.8
         with:
-          model_path: google/gemma-3-12b-it
+          model_path: ScanMe/test-models
           model_version: main
           community_scan: HUGGING_FACE
           fail_on_detection: false
