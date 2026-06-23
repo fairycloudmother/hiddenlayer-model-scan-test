@@ -17,7 +17,7 @@ jobs:
 
       - name: Community Scan HuggingFace
         id: community_scan_huggingface
-        uses: hiddenlayerai/hiddenlayer-model-scan-github-action@v1.0.5
+        uses: hiddenlayerai/hiddenlayer-model-scan-github-action@v1.0.8
         with:
           model_path: google/gemma-3-12b-it
           model_version: main
