@@ -9,18 +9,17 @@ permissions:
   security-events: write
 
 jobs:
-  scan_huggingface_model_community_scan:
+  scan_huggingface_model:
     runs-on: ubuntu-latest
-    name: Scan ScanMe/Models via Community Scan
+    name: Scan google/gemma-3-12b-it via hf://
     steps:
       - uses: actions/checkout@v3
-      - name: Community Scan HuggingFace
+
+      - name: Scan HuggingFace Model
         id: scan_model_huggingface
         uses: hiddenlayerai/hiddenlayer-model-scan-github-action@v1.0.8
         with:
-          model_path: ScanMe/test-models
-          model_version: 2182cc44df14f11b31437a819f215f7ced6a2ec3
-          community_scan: HUGGING_FACE
+          model_path: hf://google/gemma-3-12b-it
           fail_on_detection: false
           sarif_file: output.sarif
         env:
@@ -36,5 +35,4 @@ jobs:
       - name: Upload SARIF file
         uses: github/codeql-action/upload-sarif@v3
         with:
-          # Path to SARIF file relative to the root of the repository
-            sarif_file: output.sarif
+          sarif_file: output.sarif
