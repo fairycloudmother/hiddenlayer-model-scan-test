@@ -38,6 +38,7 @@ jobs:
         with:
           model_path: ./hf-model
           model_name: flair/ner-english-ontonotes
+          model_version: new
           fail_on_detection: false
           sarif_file: output.sarif
         env:
