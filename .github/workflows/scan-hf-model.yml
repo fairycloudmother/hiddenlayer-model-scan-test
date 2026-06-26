@@ -11,7 +11,7 @@ permissions:
 jobs:
   scan_huggingface_model_sha:
     runs-on: ubuntu-latest
-    name: Scan ScanMe/test-models at SHA
+    name: flair/ner-english-ontonotes at SHA
     steps:
       - uses: actions/checkout@v3
 
@@ -23,8 +23,8 @@ jobs:
           from huggingface_hub import snapshot_download
 
           snapshot_download(
-              repo_id="ScanMe/test-models",
-              revision="2182cc44df14f11b31437a819f215f7ced6a2ec3",
+              repo_id="flair/ner-english-ontonotes",
+              revision="88408e3951ab96c5e4016b35d8a9c61d6d7a2c01",
               local_dir="hf-model",
               token=os.environ.get("HUGGINGFACE_TOKEN"),
           )
@@ -37,7 +37,7 @@ jobs:
         uses: hiddenlayerai/hiddenlayer-model-scan-github-action@v1.0.8
         with:
           model_path: ./hf-model
-          model_name: ScanMe/test-models
+          model_name: flair/ner-english-ontonotes
           fail_on_detection: false
           sarif_file: output.sarif
         env:
