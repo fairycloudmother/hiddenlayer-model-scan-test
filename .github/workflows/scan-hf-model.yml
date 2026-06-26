@@ -37,7 +37,7 @@ jobs:
         uses: hiddenlayerai/hiddenlayer-model-scan-github-action@v1.0.8
         with:
           model_path: ./hf-model
-          model_name: flair/ner-english-ontonotes
+          model_name: flair/ner-english-ontonotes@88408e3951ab96c5e4016b35d8a9c61d6d7a2c01
           model_version: new
           fail_on_detection: false
           sarif_file: output.sarif
