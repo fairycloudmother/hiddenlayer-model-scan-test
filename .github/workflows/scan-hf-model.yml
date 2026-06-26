@@ -9,24 +9,40 @@ permissions:
   security-events: write
 
 jobs:
-  scan_huggingface_model_community_scan:
+  scan_huggingface_model_sha:
     runs-on: ubuntu-latest
-    name: Scan ScanMe/Models via Community Scan
+    name: Scan ScanMe/test-models at SHA
     steps:
       - uses: actions/checkout@v3
-      - name: Community Scan HuggingFace
+
+      - name: Download Hugging Face model at SHA
+        run: |
+          python -m pip install --upgrade huggingface_hub
+          python - <<'PY'
+          import os
+          from huggingface_hub import snapshot_download
+
+          snapshot_download(
+              repo_id="ScanMe/test-models",
+              revision="2182cc44df14f11b31437a819f215f7ced6a2ec3",
+              local_dir="hf-model",
+              token=os.environ.get("HUGGINGFACE_TOKEN"),
+          )
+          PY
+        env:
+          HUGGINGFACE_TOKEN: ${{ secrets.HF_TOKEN }}
+
+      - name: Scan downloaded Hugging Face model
         id: scan_model_huggingface
         uses: hiddenlayerai/hiddenlayer-model-scan-github-action@v1.0.8
         with:
-          model_path: ScanMe/test-models
-          model_version: "2182cc44df14f11b31437a819f215f7ced6a2ec3"
-          community_scan: HUGGING_FACE
+          model_path: ./hf-model
+          model_name: ScanMe/test-models
           fail_on_detection: false
           sarif_file: output.sarif
         env:
           HL_CLIENT_ID: ${{ secrets.HL_CLIENT_ID }}
           HL_CLIENT_SECRET: ${{ secrets.HL_CLIENT_SECRET }}
-          HUGGINGFACE_TOKEN: ${{ secrets.HF_TOKEN }}
 
       - name: Check for SARIF output
         run: |
@@ -36,5 +52,4 @@ jobs:
       - name: Upload SARIF file
         uses: github/codeql-action/upload-sarif@v3
         with:
-          # Path to SARIF file relative to the root of the repository
-            sarif_file: output.sarif
+          sarif_file: output.sarif
