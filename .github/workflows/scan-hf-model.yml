@@ -1,56 +1,21 @@
-name: Scan HuggingFace Model
+name: Community Scan gated (regression test for gated fix)
 
 on:
   workflow_dispatch:
 
-permissions:
-  actions: read
-  contents: read
-  security-events: write
-
 jobs:
-  scan_huggingface_model_sha:
+  scan:
     runs-on: ubuntu-latest
-    name: flair/ner-english-ontonotes at SHA
+    name: Community scan google/gemma-3-12b-it (gated, no HF token env)
     steps:
       - uses: actions/checkout@v3
 
-      - name: Download Hugging Face model at SHA
-        run: |
-          python -m pip install --upgrade huggingface_hub
-          python - <<'PY'
-          import os
-          from huggingface_hub import snapshot_download
-
-          snapshot_download(
-              repo_id="flair/ner-english-ontonotes",
-              revision="88408e3951ab96c5e4016b35d8a9c61d6d7a2c01",
-              local_dir="hf-model",
-              token=os.environ.get("HUGGINGFACE_TOKEN"),
-          )
-          PY
-        env:
-          HUGGINGFACE_TOKEN: ${{ secrets.HF_TOKEN }}
-
-      - name: Scan downloaded Hugging Face model
-        id: scan_model_huggingface
-        uses: hiddenlayerai/hiddenlayer-model-scan-github-action@v1.0.8
+      - name: Scan
+        uses: hiddenlayerai/hiddenlayer-model-scan-github-action@v1.0.5
         with:
-          model_path: ./hf-model
-          model_name: flair/ner-english-ontonotes@88408e3951ab96c5e4016b35d8a9c61d6d7a2c01
-          model_version: new
-          fail_on_detection: false
-          sarif_file: output.sarif
+          model_path: google/gemma-3-12b-it
+          model_version: main
+          community_scan: HUGGING_FACE
         env:
           HL_CLIENT_ID: ${{ secrets.HL_CLIENT_ID }}
           HL_CLIENT_SECRET: ${{ secrets.HL_CLIENT_SECRET }}
-
-      - name: Check for SARIF output
-        run: |
-          echo "Current directory: $(pwd)"
-          ls -al
-
-      - name: Upload SARIF file
-        uses: github/codeql-action/upload-sarif@v3
-        with:
-          sarif_file: output.sarif
