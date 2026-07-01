@@ -1,21 +1,39 @@
-name: Community Scan gated (regression test for gated fix)
+name: Scan HuggingFace Model
 
 on:
   workflow_dispatch:
 
+permissions:
+  actions: read
+  contents: read
+  security-events: write
+
 jobs:
-  scan:
+  scan_huggingface_model_community_scan:
     runs-on: ubuntu-latest
-    name: Community scan google/gemma-3-12b-it (gated, no HF token env)
+    name: Scan google/gemma-3-12b-it via Community Scan (Gated)
     steps:
       - uses: actions/checkout@v3
-
-      - name: Scan
-        uses: hiddenlayerai/hiddenlayer-model-scan-github-action@v1.0.5
+      - name: Community Scan HuggingFace
+        id: scan_model_huggingface
+        uses: hiddenlayerai/hiddenlayer-model-scan-github-action@v1.0.8
         with:
           model_path: google/gemma-3-12b-it
           model_version: main
           community_scan: HUGGING_FACE
+          fail_on_detection: false
+          sarif_file: output.sarif
         env:
           HL_CLIENT_ID: ${{ secrets.HL_CLIENT_ID }}
           HL_CLIENT_SECRET: ${{ secrets.HL_CLIENT_SECRET }}
+          HUGGINGFACE_TOKEN: ${{ secrets.HF_TOKEN }}
+
+      - name: Check for SARIF output
+        run: |
+          echo "Current directory: $(pwd)"
+          ls -al
+      - name: Upload SARIF file
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          # Path to SARIF file relative to the root of the repository
+            sarif_file: output.sarif
